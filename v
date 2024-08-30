@@ -623,7 +623,7 @@ function void:Draw(e)
 				SliderText.Size = UDim2.new(0.7521094679832458, 0, 1, 0);
 				SliderText.Font = Enum.Font.Unknown;
 				SliderText.FontFace = Font.new("rbxasset://fonts/families/Ubuntu.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-				SliderText.Text = "Slider";
+				SliderText.Text = e.Text or "Slider";
 				SliderText.TextColor3 = Color3.fromRGB(220.00000208616257, 220.00000208616257, 220.00000208616257);
 				SliderText.TextSize = 14;
 				SliderText.TextXAlignment = Enum.TextXAlignment.Left;
@@ -1194,3 +1194,8 @@ return a;
 	return tb;
 end
  return void;
+
+
+
+
+
