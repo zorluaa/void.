@@ -603,146 +603,161 @@ function void:Draw(e)
 			
 			-- SLIDER
 			function s:Slider(e)
-                e = e or {}
-                e.func = e.func or function()end
-            
-                -- Create the slider frame
-                local Slider = _New_("Frame", Cont)
-                Slider.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                Slider.BackgroundTransparency = 1
-                Slider.BorderColor3 = Color3.fromRGB(0, 0, 0)
-                Slider.BorderSizePixel = 0
-                Slider.Name = "Slider"
-                Slider.Size = UDim2.new(1, 0, 0, 30)  -- Increased height for better spacing
-            
-                -- Slider label
-                local SliderText = _New_("TextLabel", Slider)
-                SliderText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                SliderText.BackgroundTransparency = 1
-                SliderText.BorderColor3 = Color3.fromRGB(27, 42, 53)
-                SliderText.Name = "SliderText"
-                SliderText.Position = UDim2.new(0.015, 0, 0, 0)
-                SliderText.Size = UDim2.new(0.65, 0, 1, 0)  -- Adjusted size
-                SliderText.Font = Enum.Font.Unknown
-                SliderText.FontFace = Font.new("rbxasset://fonts/families/Ubuntu.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-                SliderText.Text = e.Text or "Slider"
-                SliderText.TextColor3 = Color3.fromRGB(220, 220, 220)
-                SliderText.TextSize = 14
-                SliderText.TextXAlignment = Enum.TextXAlignment.Left
-            
-                -- Add padding to slider text
-                local UIPadding = _New_("UIPadding", SliderText)
-                UIPadding.PaddingLeft = UDim.new(0, 5)
-            
-                -- Slider background
-                local shiznets = _New_("TextButton", Slider)
-                shiznets.AutoButtonColor = false
-                shiznets.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-                shiznets.BorderColor3 = Color3.fromRGB(70, 70, 70)
-                shiznets.BorderSizePixel = 0
-                shiznets.Name = "shiznets"
-                shiznets.Position = UDim2.new(0.36, -3, 0.5, 0)  -- Center the slider track vertically
-                shiznets.Size = UDim2.new(0.65, 0, 0.2, 0)  -- Increased height for better spacing
-                shiznets.Font = Enum.Font.SourceSans
-                shiznets.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-                shiznets.Text = ""
-                shiznets.TextColor3 = Color3.fromRGB(0, 0, 0)
-                shiznets.TextSize = 14
-            
-                -- Slider fill
-                local SliderFill = _New_("Frame", shiznets)
-                SliderFill.BackgroundColor3 = Color3.fromRGB(41, 90, 120)
-                SliderFill.BorderColor3 = Color3.fromRGB(41, 90, 120)
-                SliderFill.BorderSizePixel = 0
-                SliderFill.Name = "SliderFill"
-                SliderFill.Position = UDim2.new(0, 0, 0, 0)
-                SliderFill.Size = UDim2.new(0, 0, 1, 0)
-            
-                -- Slider knob
-                local SliderBack = _New_("TextButton", SliderFill)
-                SliderBack.AnchorPoint = Vector2.new(0.5, 0.5)
-                SliderBack.BackgroundColor3 = Color3.fromRGB(61, 131, 226)
-                SliderBack.BorderColor3 = Color3.fromRGB(0, 0, 0)
-                SliderBack.BorderSizePixel = 0
-                SliderBack.Name = "SliderBack"
-                SliderBack.Position = UDim2.new(1, 0, 0.5, 0)
-                SliderBack.Size = UDim2.new(0, 11, 0, 11)
-                SliderBack.Font = Enum.Font.SourceSans
-                SliderBack.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-                SliderBack.Text = ""
-                SliderBack.TextColor3 = Color3.fromRGB(0, 0, 0)
-                SliderBack.TextSize = 14
-            
-                -- Add UICorner to slider knob
-                local UICorner = _New_("UICorner", SliderBack)
-                UICorner.CornerRadius = UDim.new(1, 0)
-            
-                -- Add UIGradient to slider fill
-                local UIGradient = _New_("UIGradient", SliderFill)
-                UIGradient.Color = ColorSequence.new{
-                    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-                    ColorSequenceKeypoint.new(1, Color3.fromRGB(131, 131, 131))
-                }
-                UIGradient.Rotation = 90
-            
-                -- Slider value display
-                local SliderValue = _New_("TextLabel", Slider)
-                SliderValue.BackgroundColor3 = Color3.fromRGB(138, 144, 158)
-                SliderValue.BackgroundTransparency = 1
-                SliderValue.Name = "SliderValue"
-                SliderValue.Position = UDim2.new(0.85, 8, 0, 0)  -- Adjusted position to avoid overlap
-                SliderValue.Size = UDim2.new(0.1, 0, 1, 0)  -- Adjusted size to fit the new position
-                SliderValue.Font = Enum.Font.Unknown
-                SliderValue.FontFace = Font.new("rbxasset://fonts/families/Ubuntu.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-                SliderValue.Text = "0%"
-                SliderValue.TextColor3 = Color3.fromRGB(168, 168, 168)
-                SliderValue.TextSize = 14
-                SliderValue.TextXAlignment = Enum.TextXAlignment.Right
-            
-                -- Add padding to slider value
-                local UIPadding_0 = _New_("UIPadding", SliderValue)
-                UIPadding_0.PaddingLeft = UDim.new(0, 9)
-            
-                -- Slider behavior
-                e.min = e.min or 0
-                e.max = e.max or 100
-                e.func = e.func or function() end
-            
-                local mouse = game.Players.LocalPlayer:GetMouse()
-                local uis = game:GetService("UserInputService")
-                local Value
-                local length = shiznets.Size.X.Offset
-                local height = shiznets.Size.Y.Offset
-            
-                -- Slider interaction
-                SliderBack.MouseButton1Down:Connect(function()
-                    Value = math.floor((((tonumber(e.max) - tonumber(e.min)) / length) * SliderFill.AbsoluteSize.X) + tonumber(e.min)) or 0
-                    pcall(function()
-                        e.func(Value)
-                    end)
-                    SliderFill.Size = UDim2.new(0, math.clamp(mouse.X - SliderFill.AbsolutePosition.X, 0, length), 0, height)
-                    local moveconnection = mouse.Move:Connect(function()
-                        SliderValue.Text = Value..e.prefix
-                        Value = math.floor((((tonumber(e.max) - tonumber(e.min)) / length) * SliderFill.AbsoluteSize.X) + tonumber(e.min))
-                        pcall(function()
-                            e.func(Value)
-                        end)
-                        SliderFill.Size = UDim2.new(0, math.clamp(mouse.X - SliderFill.AbsolutePosition.X, 0, length), 0, height)
-                    end)
-                    local releaseconnection = uis.InputEnded:Connect(function(Mouse)
-                        if Mouse.UserInputType == Enum.UserInputType.MouseButton1 then
-                            Value = math.floor((((tonumber(e.max) - tonumber(e.min)) / length) * SliderFill.AbsoluteSize.X) + tonumber(e.min))
-                            pcall(function()
-                                e.func(Value)
-                            end)
-                            SliderFill.Size = UDim2.new(0, math.clamp(mouse.X - SliderFill.AbsolutePosition.X, 0, length), 0, height)
-                            moveconnection:Disconnect()
-                            releaseconnection:Disconnect()
-                        end
-                    end)
-                end)
-            end
-            
+				e = e or {}
+				e.func = e.func or function()end
+
+				local Slider = _New_("Frame", Cont);
+				Slider.BackgroundColor3 = Color3.fromRGB(255, 255, 255);
+				Slider.BackgroundTransparency = 1;
+				Slider.BorderColor3 = Color3.fromRGB(0, 0, 0);
+				Slider.BorderSizePixel = 0;
+				Slider.Name = "Slider";
+				Slider.Size = UDim2.new(1, 0, 0, 25);
+
+				local SliderText = _New_("TextLabel", Slider);
+				SliderText.BackgroundColor3 = Color3.fromRGB(255, 255, 255);
+				SliderText.BackgroundTransparency = 1;
+				SliderText.BorderColor3 = Color3.fromRGB(27.000002190470695, 42.000001296401024, 53.000004440546036);
+				SliderText.Name = "SliderText";
+				SliderText.Position = UDim2.new(0.015384615398943424, 0, 0, 0);
+				SliderText.Size = UDim2.new(0.7521094679832458, 0, 1, 0);
+				SliderText.Font = Enum.Font.Unknown;
+				SliderText.FontFace = Font.new("rbxasset://fonts/families/Ubuntu.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+				SliderText.Text = e.Text or "Slider";
+				SliderText.TextColor3 = Color3.fromRGB(220.00000208616257, 220.00000208616257, 220.00000208616257);
+				SliderText.TextSize = 14;
+				SliderText.TextXAlignment = Enum.TextXAlignment.Left;
+
+				local UIPadding = _New_("UIPadding", SliderText);
+				UIPadding.PaddingLeft = UDim.new(0, 5);
+
+				local shiznets = _New_("TextButton", Slider);
+				shiznets.AutoButtonColor = false;
+				shiznets.BackgroundColor3 = Color3.fromRGB(30.00000011175871, 30.00000011175871, 30.00000011175871);
+				shiznets.BorderColor3 = Color3.fromRGB(70.00000342726707, 70.00000342726707, 70.00000342726707);
+				shiznets.BorderSizePixel = 0;
+				shiznets.Name = "shiznets";
+				shiznets.Position = UDim2.new(0.3611794412136078, -3, 0, 12);
+				shiznets.Size = UDim2.new(0, 93, 0, 2);
+				shiznets.Font = Enum.Font.SourceSans;
+				shiznets.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+				shiznets.Text = "";
+				shiznets.TextColor3 = Color3.fromRGB(0, 0, 0);
+				shiznets.TextSize = 14;
+
+				local SliderFill = _New_("Frame", shiznets);
+				SliderFill.BackgroundColor3 = Color3.fromRGB(41.00000135600567, 90.00000223517418, 120.00000044703484);
+				SliderFill.BorderColor3 = Color3.fromRGB(41.00000135600567, 90.00000223517418, 120.00000044703484);
+				SliderFill.BorderSizePixel = 0;
+				SliderFill.Name = "SliderFill";
+				SliderFill.Position = UDim2.new(-0.008474576286971569, 0, 0, 0);
+				SliderFill.Size = UDim2.new(0, 0, 1, 0);
+
+				local UIGradient = _New_("UIGradient", SliderFill);
+				UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(131.00000739097595, 131.00000739097595, 131.00000739097595))};
+				UIGradient.Rotation = 90;
+
+				local SliderBack = _New_("TextButton", SliderFill);
+				SliderBack.AnchorPoint = Vector2.new(0.5, 0.5);
+				SliderBack.BackgroundColor3 = Color3.fromRGB(61.00000016391277, 131.00000739097595, 226.0000017285347);
+				SliderBack.BorderColor3 = Color3.fromRGB(0, 0, 0);
+				SliderBack.BorderSizePixel = 0;
+				SliderBack.Name = "SliderBack";
+				SliderBack.Position = UDim2.new(1, 0, 0.5, 0);
+				SliderBack.Size = UDim2.new(0, 11, 0, 11);
+				SliderBack.Font = Enum.Font.SourceSans;
+				SliderBack.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+				SliderBack.Text = "";
+				SliderBack.TextColor3 = Color3.fromRGB(0, 0, 0);
+				SliderBack.TextSize = 14;
+
+				local UICorner = _New_("UICorner", SliderBack);
+				UICorner.CornerRadius = UDim.new(1, 0);
+
+				local UIGradient_0 = _New_("UIGradient", shiznets);
+				UIGradient_0.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(131.00000739097595, 131.00000739097595, 131.00000739097595))};
+				UIGradient_0.Rotation = 90;
+
+				local SliderValue = _New_("TextLabel", Slider);
+				SliderValue.BackgroundColor3 = Color3.fromRGB(138.00000697374344, 144.00000661611557, 158.00000578165054);
+				SliderValue.BackgroundTransparency = 1;
+				SliderValue.Name = "SliderValue";
+				SliderValue.Position = UDim2.new(0.8345296382904053, 8, -0.3199999928474426, 8);
+				SliderValue.Size = UDim2.new(0.10749948024749756, 0, 1, 0);
+				SliderValue.Font = Enum.Font.Unknown;
+				SliderValue.FontFace = Font.new("rbxasset://fonts/families/Ubuntu.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+				SliderValue.Text = "0%";
+				SliderValue.TextColor3 = Color3.fromRGB(168.0000051856041, 168.0000051856041, 168.0000051856041);
+				SliderValue.TextSize = 14;
+				SliderValue.TextXAlignment = Enum.TextXAlignment.Right;
+
+				local UIPadding_0 = _New_("UIPadding", SliderValue);
+				UIPadding_0.PaddingLeft = UDim.new(0, 9);
+				
+				-----Values-----
+				e.min = e.min or 0
+				e.max = e.max or 100
+
+
+				-----Callback-----
+				e.func = e.func or function() end
+
+
+				-----Variables-----
+				local mouse = game.Players.LocalPlayer:GetMouse()
+				local uis = game:GetService("UserInputService")
+				local Value;
+				local length = shiznets.Size.X.Offset
+				local height = shiznets.Size.Y.Offset
+				
+				SliderBack.MouseButton1Down:Connect(function()
+					SliderValue.Text = Value..e.prefix
+				end)
+
+
+
+				SliderBack.MouseButton1Down:Connect(function()
+					Value = math.floor((((tonumber(e.max) - tonumber(e.min)) / length) * SliderFill.AbsoluteSize.X) + tonumber(e.min)) or 0
+					-- Value = e.def
+
+					pcall(function()
+						e.func(Value)
+					end)
+					SliderFill.Size = UDim2.new(0, math.clamp(mouse.X - SliderFill.AbsolutePosition.X, 0, length), 0, height)
+					moveconnection = mouse.Move:Connect(function()
+						SliderValue.Text = Value..e.prefix
+						Value = math.floor((((tonumber(e.max) - tonumber(e.min)) / length) * SliderFill.AbsoluteSize.X) + tonumber(e.min))
+						pcall(function()
+							e.func(Value)
+						end)
+
+						SliderFill.Size = UDim2.new(0, math.clamp(mouse.X - SliderFill.AbsolutePosition.X, 0, length), 0, height)
+					end)
+					releaseconnection = uis.InputEnded:Connect(function(Mouse)
+						if Mouse.UserInputType == Enum.UserInputType.MouseButton1 then
+							Value = math.floor((((tonumber(e.max) - tonumber(e.min)) / length) * SliderFill.AbsoluteSize.X) + tonumber(e.min))
+							pcall(function()
+								e.func(Value)
+							end)
+							SliderFill.Size = UDim2.new(0, math.clamp(mouse.X - SliderFill.AbsolutePosition.X, 0, length), 0, height)
+							moveconnection:Disconnect()
+							releaseconnection:Disconnect()
+						end
+					end)
+				end)
+				-- touch fix
+
+				SliderBack.MouseButton1Down:Connect(function()
+					SliderValue.Text = Value..e.prefix
+					Value = math.floor((((tonumber(e.max) - tonumber(e.min)) / length) * SliderFill.AbsoluteSize.X) + tonumber(e.min))
+					pcall(function()
+						e.func(Value)
+					end)
+
+					SliderFill.Size = UDim2.new(0, math.clamp(mouse.X - SliderFill.AbsolutePosition.X, 0, length), 0, height)
+				end)
+			end
+			
 			function s:DropDown(e)
 				
 				e =  e or {}
@@ -1183,3 +1198,65 @@ end
 
 
 
+ local main = void:Draw({
+    Name = "VOID.LUA",
+    Type = "Paid",  -- this is the type of script, it doesnt do anything its just a status
+    Version = "V4.0"
+})
+
+local split = main:Splitter({
+    Text = "Main"
+})
+local tab = main:Tab({
+    Text = "Aim",
+    Value = true,
+    Image = 9063481343
+})
+
+local sec1 = tab:Section({
+    Text = "Right Side",
+    Side = "R"
+})
+
+
+local btn = sec1:Button({
+    Text = "btn",
+    func = function()
+        print("hi")
+    end
+})
+
+local toggle = sec1:Toggle({
+    Text = "Right Toggle",
+    func = function(e)
+    print(e)    
+    end
+})
+
+
+local slider = sec1:Slider({
+    Text = "slide",
+    min = 0,
+    max = 40,
+    prefix = "$",
+    func = function(e)
+        print(e)
+    end
+})
+
+
+
+sec1:DropDown({
+    Text = "drop",
+    list = {"1","2"},
+    func = function(e)
+        print(e)
+    end
+})
+
+sec1:ColorPicker({
+    Text = "clr Picker",
+    func = function(e)
+        print(e)
+    end,
+})
