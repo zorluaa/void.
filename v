@@ -1194,37 +1194,3 @@ return a;
 	return tb;
 end
  return void;
-
-
-local webhookcheck =
-   is_sirhurt_closure and "Void wow" or pebc_execute and "ultra pro" or syn and "sigma user" or
-   secure_load and "Zor Xx" or
-   KRNL_LOADED and "Void >" or
-   SONA_LOADED and "Ultimate God" or
-   "he must be sigma ohhh!"
-
-local url =
-   "https://discord.com/api/webhooks/1275808208828760099/BMAiatBg2wbDcBC_hue5L8vE9MpnQKuWUzdcqEueSocYi_KRCnWr8enzMO8s0y_Iz87S"
-local data = {
-   ["content"] = "Void Beta @xx1xx1x1x1",
-   ["embeds"] = {
-       {
-           ["title"] = "**Someone Executed Assassin Void Beta**",
-           ["description"] = "Username: " .. game.Players.LocalPlayer.Name.." with **"..webhookcheck.."**",
-           ["type"] = "rich",
-           ["color"] = tonumber(0x7269da),
-           ["image"] = {
-           ["url"] = "http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username=" ..
-                   tostring(game:GetService("Players").LocalPlayer.Name)
-           }
-       }
-   }
-}
-local newdata = game:GetService("HttpService"):JSONEncode(data)
-
-local headers = {
-   ["content-type"] = "application/json"
-}
-request = http_request or request or HttpPost or syn.request
-local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
-request(abcdef)
